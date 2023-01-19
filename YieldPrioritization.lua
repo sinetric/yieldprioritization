@@ -51,7 +51,7 @@ local _yieldPrioritise = {
 				assert(priority, "[1] YieldPriority is not set!")
 				assert(func, "[2] Function is not set!")
 				assert(type(self) == "table", "[3] 'self' cannot be found, please call the method :AccordPriorities instead")
-				
+
 				if not self.SetPriorities[priority] then
 					self.SetPriorities[priority] = func
 				else
@@ -65,8 +65,6 @@ local _yieldPrioritise = {
 							func
 						}
 					end
-					
-					print(self.SetPriorities[priority])
 				end
 
 				if (not yielding) == false then
@@ -75,14 +73,14 @@ local _yieldPrioritise = {
 			end,
 			StartPriorities = function(self)
 				assert(type(self) == "table", "[3] 'self' cannot be found, please call the method :StartPriorities instead")
-				
+
 				for global_i, _ in pairs(self.SetPriorities) do
 					local priorities = self.SetPriorities[global_i]
 
 					if type(priorities) == "table" then
 						for i, _function in pairs(priorities) do
 							local isNonYielding = self:_searchForNonYielding(_function)
-							
+
 							if isNonYielding then
 								task.spawn(function()
 									_function()
@@ -93,7 +91,7 @@ local _yieldPrioritise = {
 						end
 					elseif type(priorities) == "function" then
 						local isNonYielding = self:_searchForNonYielding(priorities)
-						
+
 						if isNonYielding then
 							task.spawn(function()
 								priorities()
